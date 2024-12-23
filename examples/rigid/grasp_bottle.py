@@ -50,6 +50,13 @@ def main():
     ########################## build ##########################
     scene.build()
 
+    gs.tools.run_in_another_thread(fn=run_sim, args=(scene, franka, args.vis))
+
+    if args.vis:
+        scene.viewer.start()
+        
+def run_sim(scene, franka, enable_vis):
+
     motors_dof = np.arange(7)
     fingers_dof = np.arange(7, 9)
 
@@ -103,9 +110,12 @@ def main():
     )
     franka.control_dofs_position(qpos[:-2], motors_dof)
     franka.control_dofs_force(np.array([-20, -20]), fingers_dof)  # can also use force control
+    
     for i in range(1000):
         scene.step()
 
+    if enable_vis:
+        scene.viewer.stop()
 
 if __name__ == "__main__":
     main()

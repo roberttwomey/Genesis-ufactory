@@ -48,8 +48,15 @@ def main():
     )
 
     ########################## build ##########################
-    n_envs = 100
+    n_envs = 25
     scene.build(n_envs=n_envs, env_spacing=(1.0, 1.0))
+
+    gs.tools.run_in_another_thread(fn=run_sim, args=(scene, robot, target_entity, n_envs, args.vis))
+
+    if args.vis:
+        scene.viewer.start()
+
+def run_sim(scene, robot, target_entity, n_envs, enable_vis):
 
     target_quat = np.tile(np.array([0, 1, 0, 0]), [n_envs, 1])  # pointing downwards
     center = np.tile(np.array([0.4, -0.2, 0.25]), [n_envs, 1])
@@ -75,7 +82,9 @@ def main():
 
         robot.set_qpos(q)
         scene.step()
-
+    
+    if enable_vis:
+        scene.viewer.stop()
 
 if __name__ == "__main__":
     main()

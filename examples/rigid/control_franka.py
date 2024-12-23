@@ -39,6 +39,13 @@ def main():
     ########################## build ##########################
     scene.build()
 
+    gs.tools.run_in_another_thread(fn=run_sim, args=(scene, franka, args.vis))
+
+    if args.vis:
+        scene.viewer.start()
+
+def run_sim(scene, franka, enable_vis):
+        
     jnt_names = [
         "joint1",
         "joint2",
@@ -66,6 +73,7 @@ def main():
         np.array([87, 87, 87, 87, 12, 12, 12, 100, 100]),
         dofs_idx,
     )
+
     # Hard reset
     for i in range(150):
         if i < 50:
@@ -111,9 +119,12 @@ def main():
             )
         # This is the internal control force computed based on the given control command
         # If using force control, it's the same as the given control command
-        print("control force:", franka.get_dofs_control_force(dofs_idx))
+        # print("control force:", franka.get_dofs_control_force(dofs_idx))
 
         scene.step()
+    
+    if enable_vis:
+        scene.viewer.stop()
 
 
 if __name__ == "__main__":
