@@ -15,7 +15,6 @@ def main():
     gs.init(backend=gs.cpu if args.cpu else gs.gpu, logging_level="debug")
 
     ########################## create a scene ##########################
-
     scene = gs.Scene(
         sim_options=gs.options.SimOptions(
             substeps=10,
@@ -42,17 +41,26 @@ def main():
             pos=(0, 0, 0.8),
         ),
         surface=gs.surfaces.Default(
-            # vis_mode='recon',
+            vis_mode='recon',
         ),
     )
     ########################## build ##########################
     scene.build()
 
+    gs.tools.run_in_another_thread(fn=run_sim, args=(scene, args.vis))
+
+    if args.vis:
+        scene.viewer.start()
+
+
+def run_sim(scene, enable_vis):
     horizon = 1000
     # forward pass
     for i in range(horizon):
         scene.step()
 
+    if enable_vis:
+        scene.viewer.stop()
 
 if __name__ == "__main__":
     main()

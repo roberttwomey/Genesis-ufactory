@@ -11,7 +11,8 @@ def main():
     args = parser.parse_args()
 
     ########################## init ##########################
-    gs.init(seed=0, precision="32", logging_level="debug")
+    # gs.init(seed=0, precision="32", logging_level="debug", backend=gs.cpu)
+    gs.init(seed=0, precision="32", logging_level="debug", backend=gs.gpu)
 
     scene = gs.Scene(
         sim_options=gs.options.SimOptions(
@@ -39,8 +40,17 @@ def main():
     )
     scene.build()
 
+    gs.tools.run_in_another_thread(fn=run_sim, args=(scene, args.vis))
+    if args.vis:
+        scene.viewer.start()
+
+
+def run_sim(scene, enable_vis):
     for i in range(10000):
         scene.step()
+
+    if enable_vis:
+        scene.viewer.stop()
 
 
 if __name__ == "__main__":

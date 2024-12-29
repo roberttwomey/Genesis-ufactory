@@ -32,8 +32,12 @@ def main():
 
     ########################## entities ##########################
     plane = scene.add_entity(gs.morphs.Plane())
+    # r0 = scene.add_entity(
+    #     gs.morphs.MJCF(file="xml/franka_emika_panda/panda.xml"),
+    # )
+
     r0 = scene.add_entity(
-        gs.morphs.MJCF(file="xml/franka_emika_panda/panda.xml"),
+        gs.morphs.URDF(file='urdf/panda_bullet/panda.urdf'),
     )
 
     ########################## build ##########################

@@ -35,6 +35,13 @@ def main():
         ),
     )
 
+    gs.tools.run_in_another_thread(fn=run_sim, args=(scene, args.vis))
+
+    if args.vis:
+        scene.viewer.start()
+
+def run_sim(scene, enable_vis):
+
     horizontal_scale = 0.25
     vertical_scale = 0.005
     height_field = np.zeros([40, 40])
@@ -66,6 +73,8 @@ def main():
         time.sleep(0.5)
         scene.step()
 
+    if enable_vis:
+        scene.viewer.stop()
 
 if __name__ == "__main__":
     main()
