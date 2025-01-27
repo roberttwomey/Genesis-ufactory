@@ -1,3 +1,72 @@
+# Installation instructions for m-series mac
+2025-01-27 
+rtwomey@ucsd.edu
+
+## Installation
+
+```zsh
+conda create --name genesis python=3.10 -y  
+conda activate genesis  
+python -m pip install genesis-world  
+python -m pip install torch torchvision torchaudio  
+python render_on_macos.py -v
+```
+
+https://github.com/Genesis-Embodied-AI/Genesis/issues/207#issuecomment-2558123904
+
+## OMPL
+to install Motion Planning: https://genesis-world.readthedocs.io/en/latest/user_guide/overview/installation.html#optional-motion-planning
+
+get ompl pre-built wheel
+https://github.com/ompl/ompl/releases/tag/prerelease
+
+to install OMPL: 
+
+```zsh
+conda activate genesis
+wget https://github.com/ompl/ompl/releases/download/prerelease/ompl-1.6.0-cp310-cp310-macosx_13_0_arm64.whl
+pip install ompl-1.6.0-cp310-cp310-macosx_13_0_arm64.whl
+```
+
+run Franke grasping example: 
+
+```zsh
+python rigid/grasp_bottle.py -v
+```
+
+
+from your genesis directory. 
+```zsh
+conda activate genesis
+cd examples
+```
+
+Simple single robot falling over:
+```zsh
+python render_on_macos.py -v
+```
+
+Batch robots doing circle follow task:
+```zsh
+ python rigid/ik_lite6_batched.py -v
+```
+NOTE: change the `n_envs=1`  (line 52) to some larger number to set how many robot sims you run in parallel.
+
+Takes the robot through a series of motions
+```zsh
+python tutorials/control_lite6.py -v
+```
+
+
+I don't remember what these do (look at the code and please add your own notes!)
+```zsh
+python tutorials/advanced_IK_multilink_lite6.py -v
+```
+
+
+
+---
+
 <div align="center">
   <img src="imgs/big_text.png" alt="Genesis" width="85%">
   
