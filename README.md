@@ -1,4 +1,6 @@
 # Installation instructions for m-series mac
+2025-01-27 
+rtwomey@ucsd.edu
 
 ## Installation
 
@@ -31,6 +33,36 @@ run Franke grasping example:
 ```zsh
 python rigid/grasp_bottle.py -v
 ```
+
+
+from your genesis directory. 
+```zsh
+conda activate genesis
+cd examples
+```
+
+Simple single robot falling over:
+```zsh
+python render_on_macos.py -v
+```
+
+Batch robots doing circle follow task:
+```zsh
+ python rigid/ik_lite6_batched.py -v
+```
+NOTE: change the `n_envs=1`  (line 52) to some larger number to set how many robot sims you run in parallel.
+
+Takes the robot through a series of motions
+```zsh
+python tutorials/control_lite6.py -v
+```
+
+
+I don't remember what these do (look at the code and please add your own notes!)
+```zsh
+python tutorials/advanced_IK_multilink_lite6.py -v
+```
+
 
 
 ---
