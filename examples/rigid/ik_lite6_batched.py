@@ -37,7 +37,7 @@ def main():
         gs.morphs.Plane(),
     )
     robot = scene.add_entity(
-        gs.morphs.MJCF(file="xml/franka_emika_panda/panda.xml"),
+        gs.morphs.MJCF(file="/Volumes/Work/Projects/robotics/genesis/genesis/assets/xml/ufactory_lite6/lite6_gripper_wide.xml"),
     )
 
     target_entity = scene.add_entity(
@@ -49,7 +49,7 @@ def main():
     )
 
     ########################## build ##########################
-    n_envs = 1#25
+    n_envs = 1
     scene.build(n_envs=n_envs, env_spacing=(1.0, 1.0))
 
     gs.tools.run_in_another_thread(fn=run_sim, args=(scene, robot, target_entity, n_envs, args.vis))
@@ -60,18 +60,19 @@ def main():
 def run_sim(scene, robot, target_entity, n_envs, enable_vis):
 
     target_quat = np.tile(np.array([0, 1, 0, 0]), [n_envs, 1])  # pointing downwards
-    center = np.tile(np.array([0.4, -0.2, 0.25]), [n_envs, 1])
+    # center = np.tile(np.array([0.4, -0.2, 0.25]), [n_envs, 1])
+    # center = np.tile(np.array([0.2, 0.0, -2.25]), [n_envs, 1])
     # angular_speed = np.random.uniform(-10, 10, n_envs)
-    # r = 0.1
-
+    angular_speed = np.random.uniform(-5, 5, n_envs)
+    # r = 0.08
+    
     ## centered large radius
-    angular_speed = np.random.uniform(-4, 4, n_envs)
     center = np.tile(np.array([0.0, 0.0, 0.25]), [n_envs, 1])
-    r = 0.07
+    r = 0.10
+    
+    ee_link = robot.get_link("gripper_body")
 
-    ee_link = robot.get_link("hand")
-
-    for i in range(0, 2000):
+    for i in range(0, 8000):
         target_pos = np.zeros([n_envs, 3])
         target_pos[:, 0] = center[:, 0] + np.cos(i / 360 * np.pi * angular_speed) * r
         target_pos[:, 1] = center[:, 1] + np.sin(i / 360 * np.pi * angular_speed) * r
