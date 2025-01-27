@@ -28,6 +28,7 @@ wget https://github.com/ompl/ompl/releases/download/prerelease/ompl-1.6.0-cp310-
 pip install ompl-1.6.0-cp310-cp310-macosx_13_0_arm64.whl
 ```
 
+# Examples to run on mac
 run Franke grasping example: 
 
 ```zsh
