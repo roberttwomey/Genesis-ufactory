@@ -1,3 +1,39 @@
+# Installation instructions for m-series mac
+
+## Installation
+
+```zsh
+conda create --name genesis python=3.10 -y  
+conda activate genesis  
+python -m pip install genesis-world  
+python -m pip install torch torchvision torchaudio  
+python render_on_macos.py -v
+```
+
+https://github.com/Genesis-Embodied-AI/Genesis/issues/207#issuecomment-2558123904
+
+## OMPL
+to install Motion Planning: https://genesis-world.readthedocs.io/en/latest/user_guide/overview/installation.html#optional-motion-planning
+
+get ompl pre-built wheel
+https://github.com/ompl/ompl/releases/tag/prerelease
+
+to install OMPL: 
+
+```zsh
+conda activate genesis
+wget https://github.com/ompl/ompl/releases/download/prerelease/ompl-1.6.0-cp310-cp310-macosx_13_0_arm64.whl
+pip install ompl-1.6.0-cp310-cp310-macosx_13_0_arm64.whl
+```
+
+run Franke grasping example: 
+
+```zsh
+python rigid/grasp_bottle.py -v
+```
+
+
+---
 ![Genesis](imgs/big_text.png)
 
 ![Teaser](imgs/teaser.png)
