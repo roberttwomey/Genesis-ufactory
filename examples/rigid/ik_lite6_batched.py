@@ -38,6 +38,7 @@ def main():
     )
     robot = scene.add_entity(
         gs.morphs.MJCF(file="/Volumes/Work/Projects/robotics/genesis/genesis/assets/xml/ufactory_lite6/lite6_gripper_wide.xml"),
+        # gs.morphs.MJCF(file="/Volumes/Work/Projects/robotics/genesis/genesis/assets/xml/ufactory_lite6/lite6.xml"),
     )
 
     target_entity = scene.add_entity(
@@ -49,7 +50,7 @@ def main():
     )
 
     ########################## build ##########################
-    n_envs = 1
+    n_envs = 5
     scene.build(n_envs=n_envs, env_spacing=(1.0, 1.0))
 
     gs.tools.run_in_another_thread(fn=run_sim, args=(scene, robot, target_entity, n_envs, args.vis))
